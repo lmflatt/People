@@ -33,7 +33,6 @@ public class People {
         List<Person> peopleList = new ArrayList<>();
         File newFile = new File("people.json");
         JsonSerializer s = new JsonSerializer();
-        String json = "";
         FileWriter fw = new FileWriter(newFile);
         List<List<Person>> peopleMaster = new ArrayList<>();
 
@@ -44,7 +43,7 @@ public class People {
                 System.out.printf(person.toString());
             }
         }
-        json = s.serialize(peopleMaster);
+        String json = s.serialize(peopleMaster);
         fw.write(json);
         fw.close();
     }
