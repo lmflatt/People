@@ -1,7 +1,6 @@
 import jodd.json.JsonSerializer;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -13,8 +12,7 @@ import java.util.*;
 public class People {
     public static Map<String, List<Person>> peopleMap = new HashMap<>();
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-        List<Person> peopleList = new ArrayList<>();
+    public static void main(String[] args) throws IOException {
         File f = new File("people.csv");
         Scanner fileScanner = new Scanner(f);
         String line = fileScanner.nextLine();
@@ -25,25 +23,28 @@ public class People {
 
         orderPeopleByName();
 
-        printAndWriteToJson();
+        printAll();
+
+        writeToJson();
 
     }
 
-    public static void printAndWriteToJson() throws IOException{
-        List<Person> peopleList = new ArrayList<>();
-        File newFile = new File("people.json");
-        JsonSerializer s = new JsonSerializer();
-        FileWriter fw = new FileWriter(newFile);
-        List<List<Person>> peopleMaster = new ArrayList<>();
+    public static void printAll() {
+        List<Person> peopleList;
 
         for (Map.Entry<String, List<Person>> entry : peopleMap.entrySet()) {
             peopleList = entry.getValue();
-            peopleMaster.add(peopleList);
             for (Person person : peopleList) {
                 System.out.printf(person.toString());
             }
         }
-        String json = s.serialize(peopleMaster);
+    }
+
+    public static void writeToJson() throws IOException{
+        File newFile = new File("people.json");
+        JsonSerializer s = new JsonSerializer();
+        FileWriter fw = new FileWriter(newFile);
+        String json = s.include("*").serialize(peopleMap);
         fw.write(json);
         fw.close();
     }

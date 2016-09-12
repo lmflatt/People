@@ -1,7 +1,9 @@
+import java.io.Serializable;
+
 /**
  * Created by lee on 9/12/16.
  */
-public class Person implements Comparable {
+public class Person implements Comparable, Serializable {
     private String firstName;
     private String lastName;
     private String country;
@@ -25,6 +27,18 @@ public class Person implements Comparable {
 
     public String getCountry() {
         return country;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     @Override
